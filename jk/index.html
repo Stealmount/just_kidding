@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just_Kidding</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="meme-container">
+      <img id="memeImage" src="" alt="Random Meme">
+      <div class="button-group">
+        <button onclick="fetchRandomMeme()">Get Random Meme</button>
+        <button onclick="postToTwitter('meme')">Post Meme</button> <!-- New "Post Meme" button -->
+        <i class="fa-brands fa-x-twitter"></i> <!-- Twitter logo -->
+      </div>
+    </div>
+    <div class="joke-container">
+      <p id="jokeText">Fetching a joke...</p>
+      <div class="button-group">
+        <button onclick="fetchRandomJoke()">Get Random Joke</button>
+        <button onclick="postToTwitter('joke')">Post Joke</button> <!-- New "Post Joke" button -->
+        <i class="fa-brands fa-x-twitter"></i> <!-- Twitter logo -->
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
