@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
+        .results {
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>English Quiz</h1>
+    <div class="timer">Time left: <span id="time">5:00</span></div>
+    <form id="quizForm">
+        <!-- Questions -->
+        <div class="question">
+            <label>71. I love pets. I’m a member of an <input type="text" name="q71"> protection rights group and do volunteer work once a month.</label>
+        </div>
+        <div class="question">
+            <label>72. I couldn’t believe it when he agreed to make an <input type="text" name="q72"> on the show tonight.</label>
+        </div>
+        <div class="question">
+            <label>73. The police have been <input type="text" name="q73"> the activity at that house for two months.</label>
+        </div>
+        <div class="question">
+            <label>74. You can make <input type="text" name="q74"> of this document in the print room. Make enough for ten people.</label>
+        </div>
+        <div class="question">
+            <label>75. I was recently <input type="text" name="q75"> from the Berlin office to the Tokyo office.</label>
+        </div>
+        <div class="question">
+            <label>76. In my company, it’s the manager's job to divide work <input type="text" name="q76"> the team members.</label>
+        </div>
+        <div class="question">
+            <label>77. He burned the oil and the <input type="text" name="q77"> left a black mark above the stove.</label>
+        </div>
+        <div class="question">
+            <label>78. The broadcasting company is funded by the government. However, everybody who owns a television pays an annual <input type="text" name="q78">.</label>
+        </div>
+        <div class="question">
+            <label>79. Some of my fondest memories are going fishing and setting up a <input type="text" name="q79"> near a lake with my family.</label>
+        </div>
+        <div class="question">
+            <label>80. The city can be divided into two parts. The outer sections are <input type="text" name="q80"> new, the historical city centre is rather old, indeed.</label>
+        </div>
+        <div class="question">
+            <label>81. Don’t forget to ask for a receipt when you pay.</label>
+        </div>
+        <div class="question">
+            <label>82. The company achieved its target last year and reported a <input type="text" name="q82">.</label>
+        </div>
+        <div class="question">
+            <label>83. A good policy is to always <input type="text" name="q83"> to customer requests within 24 hours, otherwise they may get annoyed.</label>
+        </div>
+        <div class="question">
+            <label>84. I can’t <input type="text" name="q84"> what it must be like having to do a task like this all day.</label>
+        </div>
+        <div class="question">
+            <label>85. <input type="text" name="q85"> making one last modification to the layout the newsletter was ready to be sent out.</label>
+        </div>
+        <div class="question">
+            <label>86. All the <input type="text" name="q86"> down behind my desk are tangled.</label>
+        </div>
+        <div class="question">
+            <label>87. Her best-selling novel was <input type="text" name="q87"> for several awards.</label>
+        </div>
+        <div class="question">
+            <label>88. I made several <input type="text" name="q88"> to the store before I finally remembered to buy some more paper towels.</label>
+        </div>
+        <div class="question">
+            <label>89. The department is responsible for the mistake so they will have to <input type="text" name="q89"> the cost of failure themselves.</label>
+        </div>
+        <div class="question">
+            <label>90. My flight departed 10 minutes later than the scheduled time but arrived on <input type="text" name="q90"> at the destination.</label>
+        </div>
+        <div class="question">
+            <label>91. Please check all envelopes for the correct return <input type="text" name="q91">.</label>
+        </div>
+        <div class="question">
+            <label>92. The man <input type="text" name="q92"> his car keys and spent an hour looking for them this morning.</label>
+        </div>
+        <div class="question">
+            <label>93. If you want to meet with the CEO you need to make an appointment weeks in <input type="text" name="q93">.</label>
+        </div>
+        <div class="question">
+            <label>94. Before you drive over a bridge you have to pay the <input type="text" name="q94"> at the booth.</label>
+        </div>
+        <div class="question">
+            <label>95. The money was <input type="text" name="q95"> among several people.</label>
+        </div>
+        <div class="question">
+            <label>96. An increasing <input type="text" name="q96"> of businesses have recently shut down due to the economic downturn.</label>
+        </div>
+        <div class="question">
+            <label>97. My sister is <input type="text" name="q97"> from the surgery very well. The doctor told us that she should be able to go home next week.</label>
+        </div>
+        <div class="question">
+            <label>98. If you don’t <input type="text" name="q98"> the height requirement you are not allowed to get on the ride.</label>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <div class="results">
+        Your score is: <span id="score"></span>/28
+    </div>
+    <script>
+        // Timer logic
+        let totalSeconds = 300;
+        const timer = document.getElementById('time');
+        const interval = setInterval(() => {
+            totalSeconds--;
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (totalSeconds <= 0) {
+                clearInterval(interval);
+                document.getElementById('quizForm').submit();
+            }
+        }, 1000);
+
+        // Quiz submission logic
+        const form = document.getElementById('quizForm');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            clearInterval(interval);
+
+            // Correct answers
+            const answers = {
+                q71: 'animal',
+                q72: 'appointment',
+                q73: 'observing',
+                q74: 'copies',
+                q75: 'transferred',
+                q76: 'amongst',
+                q77: 'smoke',
+                q78: 'fee',
+                q79: 'camp',
+                q80: 'pretty',
+                q81: 'receipt',
+                q82: 'profit',
+                q83: 'respond',
+                q84: 'imagine',
+                q85: 'After',
+                q86: 'wires',
+                q87: 'nominated',
+                q88: 'trips',
+                q89: 'bear',
+                q90: 'time',
+                q91: 'address',
+                q92: 'lost',
+                q93: 'advance',
+                q94: 'toll',
+                q95: 'divided',
+                q96: 'number',
+                q97: 'recovering',
+                q98: 'meet',
+            };
+
+            let score = 0;
+            for (const [key, value] of Object.entries(answers)) {
+                const userAnswer = form[key].value.trim().toLowerCase();
+                if (userAnswer === value.toLowerCase()) {
+                    score++;
+                }
+            }
+
+            // Display the results
+            document.querySelector('.results').style.display = 'block';
+            document.getElementById('score').textContent = score;
+        });
+    </script>
+</body>
+</html>

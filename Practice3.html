@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
+        .results {
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>English Quiz</h1>
+    <div class="timer">Time left: <span id="time">4:00</span></div>
+    <form id="quizForm">
+        <!-- Questions -->
+        <div class="question">
+            <label>41. After the treatment, my sister is <input type="text" name="q41"> just fine.</label>
+        </div>
+        <div class="question">
+            <label>42. I am a salesman, and what do<input type="text" name="q42">?</label>
+        </div>
+        <div class="question">
+            <label>43. I am sorry I am late, I <input type="text" name="q43"> up late this morning.</label>
+        </div>
+        <div class="question">
+            <label>44. I am not sure if I can come tomorrow, I will have to <input type="text" name="q44"> my schedule.</label>
+        </div>
+        <div class="question">
+            <label>45. It looks like this document has been edited already, is this the final <input type="text" name="q45">?</label>
+        </div>
+        <div class="question">
+            <label>46. Don’t forget to ask for a <input type="text" name="q46"> when you pay.</label>
+        </div>
+        <div class="question">
+            <label>47. Since you have finished everything else for the rest of the week, you can take an <input type="text" name="q47"> tomorrow.</label>
+        </div>
+        <div class="question">
+            <label>48. I wanted to buy the book but the book store did not <input type="text" name="q48"> any in stock.</label>
+        </div>
+        <div class="question">
+            <label>49. Thank you very much for your help on such short <input type="text" name="q49">, it helped us when time was running short.</label>
+        </div>
+        <div class="question">
+            <label>50. Please make sure that all seat belts are securely <input type="text" name="q50">.</label>
+        </div>
+        <div class="question">
+            <label>51. Although sales were down last quarter the owner had high <input type="text" name="q51"> that business will improve soon.</label>
+        </div>
+        <div class="question">
+            <label>52. I know you love travelling abroad, would you be interested in a <input type="text" name="q52"> in our overseas office.</label>
+        </div>
+        <div class="question">
+            <label>53. We had plans to go hiking tomorrow, but due to weather conditions we had to come up with an <input type="text" name="q53"> plan.</label>
+        </div>
+        <div class="question">
+            <label>54. The amount of air pollution in this town has increased substantially <input type="text" name="q54"> the factory opened.</label>
+        </div>
+        <div class="question">
+            <label>55. The training program <input type="text" name="q55"> a wide selection of courses to those students who are interested.</label>
+        </div>
+        <div class="question">
+            <label>56. The residents were advised to evacuate their homes <input type="text" name="q56"> the storm reached them.</label>
+        </div>
+        <div class="question">
+            <label>57. The number of attendees far exceeded our expectation. The event site was very <input type="text" name="q57"> it was not even easy to walk around.</label>
+        </div>
+        <div class="question">
+            <label>58. Recent studies have shown that the shopping <input type="text" name="q58"> of consumers have changed dramatically in the past ten years.</label>
+        </div>
+        <div class="question">
+            <label>59. All of the city council members, with the <input type="text" name="q59"> of one voted against the new law.</label>
+        </div>
+        <div class="question">
+            <label>60. She was a junior manager but now she has been <input type="text" name="q60"> to a senior management position.</label>
+        </div>
+        <div class="question">
+            <label>61. I don’t <input type="text" name="q61"> what I wrote. I’m going to rewrite it completely.</label>
+        </div>
+        <div class="question">
+            <label>62. Negotiations came to a halt as leaders struggled to reach terms that were <input type="text" name="q62"> to both parties.</label>
+        </div>
+        <div class="question">
+            <label>63. Because the company did not accept applications by mail, he had to submit his application using the <input type="text" name="q64"> website.</label>
+        </div>
+        <div class="question">
+            <label>64. The library <input type="text" name="q64"> the event by posting flyers throughout the city.</label>
+        </div>
+        <div class="question">
+            <label>65. The speaker at the conference was very interesting. I <input type="text" name="q65"> his talk very much.</label>
+        </div>
+        <div class="question">
+            <label>66. City buildings can only be so tall. The exact height will <input type="text" name="q66"> on local regulations.</label>
+        </div>
+        <div class="question">
+            <label>67. You need a parking <input type="text" name="q67"> if you want to leave your car here.</label>
+        </div>
+        <div class="question">
+            <label>68. His appearance had changed <input type="text" name="q68"> in the past five years, that I didn’t even recognize him when I saw him.</label>
+        </div>
+        <div class="question">
+            <label>69. This is cutting <input type="text" name="q69"> technology - it’s the best on the market.</label>
+        </div>
+        <div class="question">
+            <label>70. You may not <input type="text" name="q70"> with his methods, but there’s no question that he makes a lot of money for the company.</label>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <div class="results">
+        Your score is: <span id="score"></span>/30
+    </div>
+    <script>
+        // Timer logic
+        let totalSeconds = 300;
+        const timer = document.getElementById('time');
+        const interval = setInterval(() => {
+            totalSeconds--;
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (totalSeconds <= 0) {
+                clearInterval(interval);
+                document.getElementById('quizForm').submit();
+            }
+        }, 1000);
+
+        // Quiz submission logic
+        const form = document.getElementById('quizForm');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            clearInterval(interval);
+
+            // Correct answers
+            const answers = {
+                q41: 'doing',
+                q42: 'you do',
+                q43: 'woke',
+                q44: 'check',
+                q45: 'copy',
+                q46: 'receipt',
+                q47: 'off',
+                q48: 'have',
+                q49: 'notice',
+                q50: 'fastened',
+                q51: 'hopes',
+                q52: 'position',
+                q53: 'alternate',
+                q54: 'since',
+                q55: 'offers',
+                q56: 'before',
+                q57: 'crowded',
+                q58: 'preferences',
+                q59: 'unity',
+                q60: 'promoted',
+                q61: 'remember/ike',
+                q62: 'agreeable/acceptable',
+                q63: "company's",
+                q64: 'promoted',
+                q65: 'liked',
+                q66: 'depend',
+                q67: 'ticket',
+                q68: 'so much',
+                q69: 'edge',
+                q70: 'agree',
+            };
+
+            let score = 0;
+            for (const [key, value] of Object.entries(answers)) {
+                const userAnswer = form[key].value.trim().toLowerCase();
+                if (userAnswer === value.toLowerCase()) {
+                    score++;
+                }
+            }
+
+            // Display the results
+            document.querySelector('.results').style.display = 'block';
+            document.getElementById('score').textContent = score;
+        });
+    </script>
+</body>
+</html>

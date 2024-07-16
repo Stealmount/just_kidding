@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 1em 0;
+    }
+    main {
+      padding: 2em;
+    }
+    form ol {
+      list-style-type: decimal;
+    }
+    form li {
+      margin-bottom: 1em;
+    }
+    button {
+      display: block;
+      margin-top: 1em;
+    }
+    #result {
+      margin-top: 2em;
+      padding: 1em;
+      background-color: white;
+      border: 1px solid #ccc;
+    }
+    #timer {
+      font-size: 1.5em;
+      color: red;
+      text-align: center;
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Practice Test</h1>
+  </header>
+  <main>
+    <div id="timer">03:00</div>
+    <form id="test-form">
+      <ol>
+        <li>Finally, everything I had to do is finished, now that the project has reached <input type="text" name="q21" required>.</li>
+        <li>It <input type="text" name="q22" required> to be seen whether the company will stay in business next year.</li>
+        <li>He is running <input type="text" name="q23" required>. He should have been here half an hour ago.</li>
+        <li>The new trainees are getting <input type="text" name="q24" required> just fine.</li>
+        <li>Let’s <input type="text" name="q25" required> tomorrow's presentation until next week. I am just too busy to prepare for it right now.</li>
+        <li>She was temporarily <input type="text" name="q26" required> by the brightness of the Sun.</li>
+        <li>I am suffering from <input type="text" name="q27" required>, it was an 8-hour flight and my body thinks it’s 2 o’clock in the morning.</li>
+        <li>The baker had several <input type="text" name="q28" required> on his wrist, from the times he had touched the sides of the oven.</li>
+        <li>You can <input type="text" name="q29" required> the order as soon as you know what you want to purchase.</li>
+        <li>The event was <input type="text" name="q30" required> by an audience of over 30,000 people.</li>
+        <li>He is so concerned about the environment that I wasn’t surprised when he told me, that his shoes are made of <input type="text" name="q31" required> old tires.</li>
+        <li>Workers who have previously completed the training are <input type="text" name="q32" required> from the new training requirement.</li>
+        <li>We had made a <input type="text" name="q33" required> to go to Peru for our vacation, but we changed our minds at the last minute.</li>
+        <li>The employees of our factory must follow strict safety <input type="text" name="q34" required>.</li>
+        <li>If you want a hardworking and dependable employee, I <input type="text" name="q35" required> that you hire him.</li>
+        <li>Give regards <input type="text" name="q36" required> Anna and the kids.</li>
+        <li>When you travel abroad you need to carry your passport or some form of <input type="text" name="q37" required>.</li>
+        <li>A recent study found gadgets like laptops, phones, cameras and other electronic <input type="text" name="q38" required> are popular amongst the online shoppers.</li>
+        <li>When my bicycle got a flat <input type="text" name="q39" required> I had to take a train to work.</li>
+        <li>When you cross a bridge you need to <input type="text" name="q40" required> attention.</li>
+      </ol>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('test-form');
+      const resultDiv = document.getElementById('result');
+      const timerDiv = document.getElementById('timer');
+
+      const correctAnswers = {
+        q21: 'completion.',
+        q22: 'has',
+        q23: 'late',
+        q24: 'along',
+        q25: 'postpone',
+        q26: 'tanned/blinded',
+        q27: 'jetlag',
+        q28: 'burns',
+        q29: 'place',
+        q30: 'attended',
+        q31: 'recycled',
+        q32: 'exempted',
+        q33: 'plan',
+        q34: 'guidelines',
+        q35: 'recommend',
+        q36: 'to',
+        q37: 'identification',
+        q38: 'devices',
+        q39: 'tyre',
+        q40: 'pay'
+      };
+
+      const totalQuestions = Object.keys(correctAnswers).length;
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        let score = 0;
+        let resultText = '<h2>Results:</h2><ol>';
+
+        for (let [question, correctAnswer] of Object.entries(correctAnswers)) {
+          const userAnswer = formData.get(question);
+          if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+            score++;
+            resultText += `<li>Question ${question.slice(1)}: Correct</li>`;
+          } else {
+            resultText += `<li>Question ${question.slice(1)}: Incorrect (Your answer: "${userAnswer}", Correct answer: "${correctAnswer}")</li>`;
+          }
+        }
+
+        resultText += `</ol><p>Your score: ${score} out of ${totalQuestions}</p>`;
+        resultDiv.innerHTML = resultText;
+      });
+
+      // Timer
+      let timeLimit = 3 * 60; // 3 minutes in seconds
+      const timer = setInterval(() => {
+        timeLimit--;
+        const minutes = String(Math.floor(timeLimit / 60)).padStart(2, '0');
+        const seconds = String(timeLimit % 60).padStart(2, '0');
+        timerDiv.textContent = `${minutes}:${seconds}`;
+        if (timeLimit <= 0) {
+          clearInterval(timer);
+          form.querySelector('button[type="submit"]').click();
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
